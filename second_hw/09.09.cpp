@@ -21,10 +21,10 @@ Iterator find(Iterator first, Iterator last, const T& x) {
 
 int main() {
     std::vector<int> vec = {1, 2, 3, 4, 5};
-    auto it = find(vec.begin(), vec.end(), 3);
-    assert(it != vec.end() && *it == 3);
+    auto it = ::find(std::begin(vec), std::end(vec), 3);
+    assert(it != std::end(vec) && *it == 3);
 
     std::list<int> lst = {10, 20, 30, 40, 50};
-    auto it2 = find(lst.begin(), lst.end(), 25);
-    assert(it2 == lst.end());
+    auto it2 = ::find(std::begin(lst), std::end(lst), 25);
+    assert(it2 == std::end(lst));
 }

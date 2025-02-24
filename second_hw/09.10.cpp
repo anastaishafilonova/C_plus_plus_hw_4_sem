@@ -23,7 +23,7 @@ void merge(Iterator left, Iterator middle, Iterator right) {
 	std::vector<typename std::iterator_traits<Iterator>::value_type> buffer(std::distance(left, right), 0);
 
     auto i = left, j = middle;
-    auto k = buffer.begin();
+    auto k = std::begin(buffer);
     while (i != middle && j != right) {
         if (*i <= *j) {
             *k = *i;
@@ -48,7 +48,7 @@ void merge(Iterator left, Iterator middle, Iterator right) {
         j = std::next(j);
     }
 
-    std::copy(buffer.begin(), buffer.end(), left);
+    std::copy(std::begin(buffer), std::end(buffer), left);
 }
 
 template <typename Iterator>
@@ -82,7 +82,7 @@ int main() {
 		vector[i] = size - i;
 	}
 
-	timsort(vector.begin(), vector.end());
+	timsort(std::begin(vector), std::end(vector));
 
 	assert(std::ranges::is_sorted(vector));
 }
