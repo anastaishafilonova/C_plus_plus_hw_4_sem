@@ -42,7 +42,7 @@ public:
 
 template < typename E > auto make_entity()
 { 
-    return new E;
+    return std::make_unique<E>(E());
 }
 
 ///////////////////////////////////////////////////////////
@@ -55,9 +55,9 @@ public:
     {
     public:
 
-        static auto make_v1() { return std::make_unique<Router>(Router(1)); }
+        static std::unique_ptr<Entity> make_v1() { return std::make_unique<Router>(Router(1)); }
         
-        static auto make_v2() { return std::make_unique<Router>(Router(2)); }
+        static std::unique_ptr<Entity> make_v2() { return std::make_unique<Router>(Router(2)); }
     };
 
 //  -------------------------------------------------------
