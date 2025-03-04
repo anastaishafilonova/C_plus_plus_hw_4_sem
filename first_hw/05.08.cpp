@@ -64,7 +64,7 @@ private:
 
 int main()
 {
-    std::unique_ptr<Entity> entity_1 = std::make_unique<Client>();
+    std::shared_ptr<Entity> entity_1 = std::make_shared<Client>();
 
     std::unique_ptr<Entity> entity_2 = std::make_unique<Decorator>(Decorator(*entity_1));
 

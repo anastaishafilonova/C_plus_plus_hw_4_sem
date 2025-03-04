@@ -32,9 +32,9 @@ public:
 
 //  ------------------------------------
 
-    void add_entity(std::shared_ptr<Entity> entity) 
+    void add_entity(std::unique_ptr<Entity> entity) 
     { 
-        m_entities.push_back(entity);
+        m_entities.push_back(std::move(entity));
     }
 
 //  ------------------------------------
@@ -43,7 +43,7 @@ public:
     {
         auto size = 0uz;
 
-        for (auto entity : m_entities)
+        for (const auto& entity : m_entities)
         {
             size += entity->size();
         }
@@ -53,18 +53,18 @@ public:
 
 private:
     
-    std::vector <std::shared_ptr<Entity>> m_entities;
+    std::vector <std::unique_ptr<Entity>> m_entities;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 auto make_composite(std::size_t size_1, std::size_t size_2)
 {
-    auto composite = std::make_shared<Composite>();
+    auto composite = std::make_unique<Composite>();
 
-    for (auto i = 0uz; i < size_1; ++i) { composite->add_entity(std::make_shared<Client>()); }
+    for (auto i = 0uz; i < size_1; ++i) { composite->add_entity(std::make_unique<Client>()); }
     
-    for (auto i = 0uz; i < size_2; ++i) { composite->add_entity(std::make_shared<Server>()); }
+    for (auto i = 0uz; i < size_2; ++i) { composite->add_entity(std::make_unique<Server>()); }
 
     return composite;
 }

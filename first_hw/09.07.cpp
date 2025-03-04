@@ -10,13 +10,21 @@ private:
         std::shared_ptr<Node> right;
         std::weak_ptr<Node> parent;
 
-        Node(T value) : data(value) {}
+        Node(T value) : data(value), left(nullptr), right(nullptr) {}
+
+        ~Node() {
+            std::cout << "Node with value " << data << " is destructed\n";
+        }
     };
 
     std::shared_ptr<Node> root;
 
 public:
     Tree() : root(nullptr) {}
+
+    ~Tree() {
+        std::cout << "Tree is destructed\n";
+    }
 
     void insert(const T& value) {
         if (!root) {
@@ -26,7 +34,7 @@ public:
         }
     }
 
-    std::shared_ptr<Node> find(const T& value) {
+    std::shared_ptr<Node> find(const T& value) const {
         return findHelper(root, value);
     }
 
@@ -37,8 +45,12 @@ public:
         }
     }
 
-    int getMin() {
+    int getMin() const {
         return getMin(root)->data;
+    }
+
+    void makeCycle() {
+        
     }
 
 private:
@@ -61,7 +73,7 @@ private:
         }
     }
 
-    std::shared_ptr<Node> findHelper(std::shared_ptr<Node> node, const T& value) {
+    std::shared_ptr<Node> findHelper(std::shared_ptr<Node> node, const T& value) const {
         if (!node || node->data == value) {
             return node;
         }
@@ -100,12 +112,12 @@ private:
                 child->parent = parent;
             } else {
                 root = child;
-                root->parent.reset();
+                child->parent.reset();
             }
         }
     }
 
-    std::shared_ptr<Node> getMin(std::shared_ptr<Node> node) {
+    std::shared_ptr<Node> getMin(std::shared_ptr<Node> node) const {
         while (node->left) {
             node = node->left;
         }

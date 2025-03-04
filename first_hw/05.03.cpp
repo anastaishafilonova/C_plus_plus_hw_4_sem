@@ -11,7 +11,7 @@ public:
 
 //  ----------------------------------
 
-    virtual std::shared_ptr<Entity> copy() const = 0;
+    virtual std::unique_ptr<Entity> copy() const = 0;
 
     virtual void     test() const = 0;
 };
@@ -22,9 +22,9 @@ class Client : public Entity
 {
 public:
 
-    std::shared_ptr<Entity> copy() const override 
+    std::unique_ptr<Entity> copy() const override 
     { 
-        return std::make_shared<Client>(Client(*this));
+        return std::make_unique<Client>(Client(*this));
     } 
 
     void test() const override 
@@ -39,9 +39,9 @@ class Server : public Entity
 {
 public:
 
-    std::shared_ptr<Entity> copy() const override 
+    std::unique_ptr<Entity> copy() const override 
     { 
-        return std::make_shared<Server>(Server(*this));
+        return std::make_unique<Server>(Server(*this));
     } 
 
     void test() const override 

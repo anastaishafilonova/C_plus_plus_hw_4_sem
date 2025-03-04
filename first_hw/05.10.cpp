@@ -25,9 +25,9 @@ public:
 
 //  -------------------------------------------------------
 
-    void add_observer(std::shared_ptr<Observer> observer) 
+    void add_observer(std::unique_ptr<Observer> observer) 
     { 
-        m_observers.push_back(observer);
+        m_observers.push_back(std::move(observer));
     }
 
     void set(int x) 
@@ -39,7 +39,7 @@ public:
 
     void notify_observers() const
     { 
-        for (auto observer : m_observers)
+        for (const auto& observer : m_observers)
         {
             if (observer) 
             {
@@ -52,7 +52,7 @@ private:
 
     int m_data = 0; 
     
-    std::vector <std::shared_ptr<Observer>> m_observers;
+    std::vector <std::unique_ptr<Observer>> m_observers;
 };
 
 //////////////////////////////////////////////////////////////
@@ -85,9 +85,9 @@ int main()
 {
     Entity entity;
 
-    entity.add_observer(std::shared_ptr<Client>());
+    entity.add_observer(std::unique_ptr<Client>());
     
-    entity.add_observer(std::shared_ptr<Server>());
+    entity.add_observer(std::unique_ptr<Server>());
     
     entity.set(1);
 
