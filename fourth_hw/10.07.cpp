@@ -134,6 +134,7 @@ int main() {
 
     plt::figure_size(1200, 600);
 
+    u_int64_t i = 0;
     for (auto& [name, func] : hash_functions) {
         std::vector<int> collisions = test_collisions(name, func, strings, sizes);
         plt::plot(sizes, collisions, {{"label", name}});
