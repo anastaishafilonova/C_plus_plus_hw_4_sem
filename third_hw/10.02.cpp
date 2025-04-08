@@ -7,7 +7,7 @@ int main() {
 
     std::cout << "Initial capacity = " << vec.capacity() << "\n";
     vec.push_back(0);
-    int prev_capacity = vec.capacity();
+    auto prev_capacity = vec.capacity();
     for (ssize_t i = 1; i < 1000; ++i) {
         vec.push_back(i);
         if (vec.capacity() != prev_capacity) {
@@ -21,7 +21,7 @@ int main() {
     }
 
     std::cout << "Capacity before reservation = " << vec.capacity() << "\n";
-    int size_before = vec.size();
+    auto size_before = vec.size();
     vec.reserve(2000);  // capacity of vector will equal 100 elements
     std::cout << "Capacity after reservation = " << vec.capacity() << "\n";
     for (ssize_t i = 1001; i < 1001 + vec.capacity() - size_before; ++i) {
@@ -33,7 +33,7 @@ int main() {
 
     try {
         vec.reserve(std::numeric_limits<size_t>::max() / 16); // allocate too much memory for vector
-    } catch (const std::exception &e) {
+    } catch (const std::bad_alloc &e) {
         std::cout << "Error " << e.what() << '\n';
     }
 }
